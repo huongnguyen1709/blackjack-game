@@ -1,15 +1,32 @@
-let firstCard = 6;
-let secondCard = 9;
-let cards = [firstCard, secondCard];
-
-let sum = firstCard + secondCard;
+let cards = [];
+let sum = 0;
 let hasBlackJack = false;
-let isAlive = true;
+let isAlive = false;
 let message = '';
 
 let messageEl = document.getElementById('message-el');
 let sumEl = document.querySelector('#sum-el');
 let cardsEl = document.getElementById('cards-el');
+
+// Make this function returns a random number between 1 and 13
+function getRandomCard() {
+  let randomCard = Math.floor(Math.random() * 13) + 1;
+  // if 1 => return 11
+  // if 11 - 13 => return 10 because The Jack, Queen, and King count as 10
+  if (randomCard === 1) return 11;
+  else if (randomCard > 10) return 10;
+  else return randomCard;
+}
+
+function startGame() {
+  isAlive = true;
+  // generate 2 random number
+  let firstCard = getRandomCard();
+  let secondCard = getRandomCard();
+  cards = [firstCard, secondCard];
+  sum = firstCard + secondCard;
+  renderGame();
+}
 
 function renderGame() {
   cardsEl.textContent = 'Cards: ';
@@ -32,8 +49,9 @@ function renderGame() {
 }
 
 function newCard() {
-  let card = 6;
+  let card = getRandomCard();
   cards.push(card);
   sum += card;
   renderGame();
 }
+console.log(Math.floor(Math.random() * 6) + 1);
