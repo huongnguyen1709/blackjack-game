@@ -9,18 +9,16 @@ let sumEl = document.querySelector('#sum-el');
 let cardsEl = document.getElementById('cards-el');
 
 let startGameBtn = document.getElementById('startGame-btn');
+let newCardBtn = document.getElementById('newCard-btn');
+let resetGameBtn = document.getElementById('resetGame-btn');
 
 let player = {
-  name: 'Per',
+  name: 'Peter',
   chips: 145,
 };
 
 let playerEl = document.getElementById('player-el');
 playerEl.textContent = player.name + `: €${player.chips}`;
-
-// isAlive ? (startGameBtn.disabled = true) : (startGameBtn.disabled = false);
-
-// console.log(isAlive, startGameBtn.disabled);
 
 // Make this function returns a random number between 1 and 13
 function getRandomCard() {
@@ -41,6 +39,8 @@ function startGame() {
   sum = firstCard + secondCard;
   renderGame();
   startGameBtn.disabled = true;
+  resetGameBtn.disabled = false;
+  newCardBtn.disabled = false;
 }
 
 function renderGame() {
@@ -56,9 +56,12 @@ function renderGame() {
   } else if (sum === 21) {
     message = "Wohoo! You've got Blackjack!";
     hasBlackJack = true;
+    startGameBtn.disabled = false;
   } else {
     message = "You're out of the game!";
     isAlive = false;
+    startGameBtn.disabled = false;
+    newCardBtn.disabled = true;
   }
   messageEl.textContent = message;
 }
@@ -70,4 +73,14 @@ function newCard() {
     sum += card;
     renderGame();
   }
+}
+
+function resetGame() {
+  isAlive = false;
+  startGameBtn.disabled = false;
+  resetGameBtn.disabled = true;
+  cards = [];
+  sum = 0;
+  cardsEl.textContent = 'Cards: ';
+  sumEl.textContent = 'Sum: ';
 }
