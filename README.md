@@ -4,7 +4,7 @@
 
 ## About
 
-Follow freeCodeCamp.org
+a Blackjack game playing with dealer
 ![alt text](blackjack-game.png)
 
 ## Built With
