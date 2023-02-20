@@ -53,14 +53,8 @@ function renderDealer() {
       let dealerCard = getRandomCard();
       dealerCards.push(dealerCard);
       dealerSum += dealerCard;
-
-      console.log(dealerCards);
-      console.log(dealerSum);
     } while (dealerSum < 18);
   }
-
-  console.log(dealerCards);
-  console.log(dealerSum);
 }
 
 function startGame() {
@@ -79,7 +73,7 @@ function startGame() {
   startGameBtn.disabled = true;
   resetGameBtn.disabled = false;
   newCardBtn.disabled = false;
-  newCardBtn.disabled = false;
+
   if (sum > 15) showDownBtn.disabled = false;
 }
 
@@ -90,19 +84,18 @@ function renderGame() {
   }
 
   sumEl.textContent = 'Sum: ' + sum;
+  if (sum > 15) showDownBtn.disabled = false;
 
   if (sum < 21) {
     message = 'Do you want to draw a new card?';
   } else if (sum === 21) {
     message = "Wohoo! You've got Blackjack!";
     hasBlackJack = true;
-    startGameBtn.disabled = false;
   } else {
     message = "You're out of the game!";
     isAlive = false;
-    startGameBtn.disabled = false;
+
     newCardBtn.disabled = true;
-    showDownBtn.disabled = true;
   }
   messageEl.textContent = message;
 }
@@ -113,15 +106,18 @@ function newCard() {
     cards.push(card);
     sum += card;
     renderGame();
-    if (sum > 15) showDownBtn.disabled = false;
   }
 }
 
 function showDown() {
   if (dealerSum > 21 && sum < 22) {
     message = 'Congratulation! You win!';
+  } else if (dealerSum > 21 && sum > 21) {
+    message = 'You draw! Do you want to try one more game!';
   } else if (sum < 22 && sum > dealerSum) {
     message = 'Congratulation! You win!';
+  } else if (sum < 22 && sum === dealerSum) {
+    message = 'You draw! Do you want to try one more game!';
   } else message = 'Oops! You lose! Good luck next time!';
 
   messageEl.textContent = message;
@@ -140,8 +136,10 @@ function showDown() {
 
 function resetGame() {
   isAlive = false;
+  hasBlackJack = false;
   startGameBtn.disabled = false;
   resetGameBtn.disabled = true;
+  newCardBtn.disabled = true;
   cards = [];
   sum = 0;
   cardsEl.textContent = 'Cards: ';
