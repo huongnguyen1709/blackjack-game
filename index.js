@@ -8,6 +8,20 @@ let messageEl = document.getElementById('message-el');
 let sumEl = document.querySelector('#sum-el');
 let cardsEl = document.getElementById('cards-el');
 
+let startGameBtn = document.getElementById('startGame-btn');
+
+let player = {
+  name: 'Per',
+  chips: 145,
+};
+
+let playerEl = document.getElementById('player-el');
+playerEl.textContent = player.name + `: €${player.chips}`;
+
+// isAlive ? (startGameBtn.disabled = true) : (startGameBtn.disabled = false);
+
+// console.log(isAlive, startGameBtn.disabled);
+
 // Make this function returns a random number between 1 and 13
 function getRandomCard() {
   let randomCard = Math.floor(Math.random() * 13) + 1;
@@ -26,6 +40,7 @@ function startGame() {
   cards = [firstCard, secondCard];
   sum = firstCard + secondCard;
   renderGame();
+  startGameBtn.disabled = true;
 }
 
 function renderGame() {
@@ -49,9 +64,10 @@ function renderGame() {
 }
 
 function newCard() {
-  let card = getRandomCard();
-  cards.push(card);
-  sum += card;
-  renderGame();
+  if (isAlive && !hasBlackJack) {
+    let card = getRandomCard();
+    cards.push(card);
+    sum += card;
+    renderGame();
+  }
 }
-console.log(Math.floor(Math.random() * 6) + 1);
